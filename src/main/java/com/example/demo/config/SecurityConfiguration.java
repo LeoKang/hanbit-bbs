@@ -16,11 +16,11 @@ public class SecurityConfiguration {
                 .csrf(withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/", "article/list", "article/content")
-                        .permitAll()
+                            .permitAll()
                         .requestMatchers("/member/**")
-                        .hasAuthority("ROLE_ADMIN")
+                            .hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/signup")
-                        .permitAll()
+                            .permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
                 .formLogin(form -> form
