@@ -36,11 +36,13 @@ public class MemberUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
+        System.out.println("MemberUserDetails - getPassword() - password : " + password);
         return password;
     }
 
     @Override
     public String getUsername() {
+        System.out.println("MemberUserDetails - getUsername() - username : " + username);
         return username;
     }
 }
