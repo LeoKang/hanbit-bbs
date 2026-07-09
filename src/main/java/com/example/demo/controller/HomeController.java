@@ -1,9 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.MemberForm;
+import com.example.demo.dto.PasswordForm;
+import com.example.demo.model.MemberUserDetails;
 import com.example.demo.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,6 +53,28 @@ public class HomeController {
             return "signup";
         }
         memberService.create(memberForm);
+        return "redirect:/";
+    }
+
+    @GetMapping("/password")
+    public String getPassword(@ModelAttribute("password") PasswordForm passwordForm) {
+        return "password";
+    }
+
+    @PostMapping("/password")
+    public String postPassword(@Valid @ModelAttribute("password") PasswordForm passwordForm,
+                               BindingResult bindingResult,
+                               @AuthenticationPrincipal MemberUserDetails userDetails) {
+        if (!memberService.checkPassword(userDetails.getMemberId(), passwordForm.getOld())) {
+            bindingResult.rejectValue("old", "MissMatch", "비밀번호가 잘못 되었습니다");
+        }
+        if (!passwordForm.getPassword().equals(passwordForm.getPasswordConfirm())) {
+            bindingResult.rejectValue("passwordConfirm", "MissMatch", "비밀번호가 잘못 되었습니다");
+        }
+        if (bindingResult.hasErrors()) {
+            return "/password";
+        }
+        memberService.updatePassword(userDetails.getMemberId(), passwordForm.getPassword());
         return "redirect:/";
     }
 }
