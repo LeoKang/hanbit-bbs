@@ -13,6 +13,43 @@
           crossorigin="anonymous">
 </head>
 <body>
-base-layout
+<nav class="navbar navbar-expand bg-dark" data-bs-theme="dark">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/article/list}">
+            <img src="../static/image/spring.svg" th:src="@{/image/spring.svg}" width="30" height="30"
+                 class="d-inline-block align-text-top">스프링 부트 게시판</a>
+        <ul class="navbar-nav">
+            <li class="nav-item" sec:authorize="isAnonymous()">
+                <a th:href="@{/login}" class="nav-link">로그인</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAnonymous()">
+                <a th:href="@{/signup}" class="nav-link">회원가입</a>
+            </li>
+            <li class="nav-item dropdown" sec:authorize="hasAnyRole('ADMIN')">
+                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    관리
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" th:href="@{/member/list}">회원관리</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                   sec:authentication="principal.displayName">
+                    윤서준
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" th:href="@{/password}">비밀번호변경</a></li>
+                    <li><a class="dropdown-item" th:href="@{/logout}">로그아웃</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br>
+<div th:replace="${content}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous">
+</script>
 </body>
 </html>
