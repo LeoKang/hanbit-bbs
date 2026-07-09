@@ -7,11 +7,17 @@ import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ArticleService {
     private final MemberRepository memberRepository;
     private final ArticleRepository articleRepository;
+
+    public List<ArticleDto> findAll() {
+        return articleRepository.findAll().stream().map(this::mapToArticleDto).toList();
+    }
 
     private ArticleDto mapToArticleDto(Article article) {
         return ArticleDto.builder()
@@ -25,5 +31,4 @@ public class ArticleService {
                 .email(article.getMember().getEmail())
                 .build();
     }
-
 }
