@@ -11,8 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class ArticleService {
@@ -33,6 +31,14 @@ public class ArticleService {
                 .title(articleForm.getTitle())
                 .description(articleForm.getDescription())
                 .member(member).build();
+        articleRepository.save(article);
+        return mapToArticleDto(article);
+    }
+
+    public ArticleDto update(ArticleForm articleForm) {
+        Article article = articleRepository.findById(articleForm.getId()).orElseThrow();
+        article.setTitle(articleForm.getTitle());
+        article.setDescription(articleForm.getDescription());
         articleRepository.save(article);
         return mapToArticleDto(article);
     }
