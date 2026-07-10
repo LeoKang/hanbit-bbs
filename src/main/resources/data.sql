@@ -2,6 +2,7 @@ INSERT INTO member(name, email, password) VALUES ('윤서준', 'SeojunYoon@hanbi
 INSERT INTO member(name, email, password) VALUES ('윤광철', 'KwangcheolYoon@hanbit.co.kr',        '$2b$10$fTVSKcOesBNZo1lTAp7RzerVkAC6Z0mQvsQ.hcnhD75y95/WREe2.');
 INSERT INTO member(name, email, password) VALUES ('공미영', 'MiyeongKong@hanbit.co.kr','$2b$10$fTVSKcOesBNZo1lTAp7RzerVkAC6Z0mQvsQ.hcnhD75y95/WREe2.');
 INSERT INTO member(name, email, password) VALUES ('김도윤', 'DoyunKim@hanbit.co.kr',        '$2b$10$fTVSKcOesBNZo1lTAp7RzerVkAC6Z0mQvsQ.hcnhD75y95/WREe2.');
+INSERT INTO member(name, email, password) VALUES ('엠비씨', 'mbc@mbc.co.kr',        '$2a$10$UMxHPH6hkYdNbXqXEnPAPuIM9Jj1XesOzuwMLCgQRev/17onreY/G');
 
 INSERT INTO authority(authority, member_id) VALUES ('ROLE_ADMIN', 2);
 
