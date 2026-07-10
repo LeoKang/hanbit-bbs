@@ -40,7 +40,7 @@
                    th:href="@{/article/list(page=${pageNumber})}">1</a>
             </li>
             <li class="page-item" th:classappend="${page.last} ? 'disabled'">
-                <a class="page-link" th:href="@{/article/list(page=${page.number + 1})}">&laquo;</a>
+                <a class="page-link" th:href="@{/article/list(page=${page.number + 1})}">&raquo;</a>
             </li>
         </ul>
     </nav>
