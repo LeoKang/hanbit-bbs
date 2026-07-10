@@ -6,6 +6,8 @@ import com.example.demo.model.Member;
 import com.example.demo.repository.ArticleRepository;
 import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,10 @@ public class MemberService {
     public Optional<MemberDto> findByEmail(String email) {
         return memberRepository.findByEmail(email)
                 .map(this::mapToMemberDto);
+    }
+
+    public Page<MemberDto> findAll(Pageable pageable) {
+        return memberRepository.findAll(pageable).map(this::mapToMemberDto);
     }
 
     public boolean checkPassword(Long id, String password) {

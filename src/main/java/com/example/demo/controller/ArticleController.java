@@ -93,4 +93,10 @@ public class ArticleController {
         articleService.update(articleForm);
         return "redirect:/article/content?id=" + articleForm.getId();
     }
+
+    @GetMapping("/delete")
+    public String getArticleDelete(@RequestParam("id") Long id) {
+        articleService.delete(id);
+        return "redirect:/article/list";
+    }
 }
