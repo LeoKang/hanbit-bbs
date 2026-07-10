@@ -5,6 +5,7 @@ import com.example.demo.dto.ArticleForm;
 import com.example.demo.model.MemberUserDetails;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.ArticleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,7 +54,23 @@ public class ArticleController {
     }
 
     @PostMapping("/add")
-    public String postArticleAdd(@ModelAttribute("article") ArticleForm articleForm, @AuthenticationPrincipal MemberUserDetails userDetails) {
+    public String postArticleAdd(@Valid @ModelAttribute("article") ArticleForm articleForm,
+                                 BindingResult bindingResult,
+                                 @AuthenticationPrincipal MemberUserDetails userDetails) {
+        if (articleForm.getTitle() != null && articleForm.getTitle().contains("T발")) {
+            bindingResult.rejectValue(
+                    "title", "SlangDetected", "욕설을 사용하지 마세요");
+        }
+
+        if (articleForm.getDescription() != null && articleForm.getTitle().contains("T발")) {
+            bindingResult.rejectValue(
+                    "description", "SlangDetected", "욕설을 사용하지 마세요");
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "article-add";
+        }
+
         articleService.create(userDetails.getMemberId(), articleForm);
         return "redirect:/article/list";
     }
