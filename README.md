@@ -4,3 +4,9 @@
 - Spring Security
 - thymeleaf
 - validation
+
+
+docker compose down -v
+gradlew clean build
+docker build -t hanbit/demo .
+docker compose up
