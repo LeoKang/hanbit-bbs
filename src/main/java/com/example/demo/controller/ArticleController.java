@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.ArticleDto;
+import com.example.demo.dto.ArticleForm;
+import com.example.demo.model.MemberUserDetails;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.ArticleService;
 import lombok.RequiredArgsConstructor;
@@ -9,11 +11,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,5 +43,17 @@ public class ArticleController {
     public String getArticle(@RequestParam("id") Long id, Model model) {
         model.addAttribute("article", articleService.findById(id));
         return "article-content";
+    }
+
+    @GetMapping("/add")
+    public String getArticleAdd(@ModelAttribute("article") ArticleForm articleForm) {
+        articleForm.setDescription("바르고 고운말을 사용하여 주세요^^");
+        return "article-add";
+    }
+
+    @PostMapping("/add")
+    public String postArticleAdd(@ModelAttribute("article") ArticleForm articleForm, @AuthenticationPrincipal MemberUserDetails userDetails) {
+        articleService.create(userDetails.getMemberId(), articleForm);
+        return "redirect:/article/list";
     }
 }

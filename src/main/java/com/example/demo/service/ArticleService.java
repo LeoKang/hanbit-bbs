@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.ArticleDto;
+import com.example.demo.dto.ArticleForm;
 import com.example.demo.model.Article;
+import com.example.demo.model.Member;
 import com.example.demo.repository.ArticleRepository;
 import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,16 @@ public class ArticleService {
 
     public ArticleDto findById(Long id) {
         return articleRepository.findById(id).map(this::mapToArticleDto).orElseThrow();
+    }
+
+    public ArticleDto create(Long memberId, ArticleForm articleForm) {
+        Member member = memberRepository.findById(memberId).orElseThrow();
+        Article article = Article.builder()
+                .title(articleForm.getTitle())
+                .description(articleForm.getDescription())
+                .member(member).build();
+        articleRepository.save(article);
+        return mapToArticleDto(article);
     }
 
     private ArticleDto mapToArticleDto(Article article) {
