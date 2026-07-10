@@ -43,6 +43,25 @@ public class MemberService {
         return memberRepository.findAll(pageable).map(this::mapToMemberDto);
     }
 
+    public MemberDto patch(MemberForm memberForm) {
+        Member member = memberRepository.findById(memberForm.getId()).orElseThrow();
+
+        if (memberForm.getName() != null) {
+            member.setName(memberForm.getName());
+        }
+
+        if (memberForm.getPassword() != null) {
+            member.setPassword(memberForm.getPassword());
+        }
+
+        if (memberForm.getEmail() != null) {
+            member.setEmail(memberForm.getEmail());
+        }
+
+        memberRepository.save(member);
+        return mapToMemberDto(member);
+    }
+
     public boolean checkPassword(Long id, String password) {
         Member member = memberRepository.findById(id).orElseThrow();
         return passwordEncoder.matches(password, member.getPassword());
