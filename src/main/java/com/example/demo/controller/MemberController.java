@@ -44,4 +44,10 @@ public class MemberController {
         memberService.patch(memberForm);
         return "redirect:/member/list";
     }
+
+    @GetMapping("/delete")
+    public String getMemberDelete(@RequestParam("id") Long id) {
+        memberService.deleteById(id);
+        return "redirect:/member/list";
+    }
 }

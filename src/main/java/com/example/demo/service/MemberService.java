@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -60,6 +61,13 @@ public class MemberService {
 
         memberRepository.save(member);
         return mapToMemberDto(member);
+    }
+
+    @Transactional
+    public void deleteById(Long id) {
+        Member member = memberRepository.findById(id).orElseThrow();
+        articleRepository.deleteAllByMember(member);
+        memberRepository.delete(member);
     }
 
     public boolean checkPassword(Long id, String password) {
