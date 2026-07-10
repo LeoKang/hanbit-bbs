@@ -5,8 +5,8 @@
 - thymeleaf
 - validation
 
-
-docker compose down -v
-gradlew clean build
-docker build -t hanbit/demo .
-docker compose up
+<br>
+docker compose down -v<br>
+gradlew clean build<br>
+docker build -t hanbit/demo .<br>
+docker compose up<br>
