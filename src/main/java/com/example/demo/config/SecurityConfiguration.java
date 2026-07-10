@@ -27,7 +27,7 @@ public class SecurityConfiguration {
                 .httpBasic(withDefaults())
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/article/list", true)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
