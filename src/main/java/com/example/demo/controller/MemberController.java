@@ -22,7 +22,7 @@ public class MemberController {
     public String getMemberList(@PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         Page<MemberDto> page = memberService.findAll(pageable);
         model.addAttribute("page", page);
-        return "member/list";
+        return "member-list";
     }
 
 }
